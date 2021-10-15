@@ -1,0 +1,437 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#hdln {
+  margin-top: 100px;
+  text-align: center;
+  color: green;
+}
+
+#rwfrst {
+  margin-top: 60px;
+  text-align: center;
+  color: green;
+}
+
+.gender {
+  height: 18px !important;
+  margin-bottom: 20px;
+  margin-left: 10px;
+}
+
+.valdtncls {
+  color: red;
+  font-family: cursive;
+  font-size: 16px;
+}
+
+.valdtnstarcls {
+  color: red;
+  font-family: cursive;
+  font-size: 16px;
+}
+
+.loginform {
+  margin: 0 auto;
+  text-align: center;
+}
+
+fieldset {
+  border: 2px solid #f75d34 !important;
+  border-radius: 10px;
+
+}
+
+.submtbtn {
+  margin-bottom: 20px !important;
+}
+
+.newbut {
+  background-color: #f75d34 !important;
+}
+
+legend {
+  background-color: #f75d34;
+  color: white;
+  padding: 5px 10px;
+}
+
+input,
+textarea,
+select {
+  margin: 5px;
+  border: 1px solid black !important;
+}
+
+
+#header {
+  background: blue !important;
+}
+
+#header a {
+  color: #fff !important;
+}
+
+#header span {
+  color: #fff !important;
+}
+
+
+.logo {
+  color: #fff !important;
+  margin-right: 10px;
+}
+
+body {
+  background: #fff !important;
+}
+
+.margcssdv {
+  margin-left: 20px;
+}
+
+.entry-title a:hover {
+  color: black !important;
+}
+
+.entry-content p {
+  color: black !important;
+}
+
+.hdlg {
+  font-size: 26px;
+  font-family: cursive;
+  padding: 5px;
+  margin: 5px;
+  color: green;
+  font-style: italic;
+  font-weight: bolder;
+}
+
+.prch {
+  font-size: 30px;
+  font-family: 'Roboto';
+  font-weight: bolder;
+  margin-left: 3px;
+  padding: 2px;
+  font-style: italic;
+}
+
+.entry-img {
+  margin-top: 20px !important;
+  margin-left: 20px !important;
+}
+
+.icnslstcar {
+  font-size: 17px;
+  font-family: 'FontAwesome';
+  padding: 2px;
+  color: black;
+}
+
+.prctxt {
+  font-size: 17px;
+  font-family: 'FontAwesome';
+  padding: 2px;
+  color: #eb0a0a;
+  font-weight: bolder;
+}
+
+.desceditor {
+  margin: 10px;
+  padding: 10px;
+  color: black;
+}
+
+.homerdmr {
+  margin-top: 20px;
+}
+
+.homerdmr a {
+  color: blue !important;
+  font-size: 17px;
+  font-family: cursive;
+  padding: 2px;
+  font-weight: bolder;
+
+}
+
+.homecar {
+  max-height: 520px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.client-logo {
+  color: black;
+  font-family: 'boxicons';
+}
+
+.dtls_1 {
+  font-size: 17px;
+  font-family: cursive;
+  padding: 2px;
+  color: blue;
+  font-weight: bolder;
+}
+
+.boknwbut a {
+  color: #fff !important;
+}
+
+.bknw a {
+  color: #fff !important;
+}
+
+.carnam {
+  color: black;
+}
+
+.carnum {
+  color: blue;
+}
+
+.carnum span {
+  color: black;
+  font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
+  font-weight: bolder;
+}
+
+.hmcdul li {
+  float: left;
+  margin-left: 10px;
+}
+
+.hmimgcss {
+  max-height: 190px;
+}
+
+.hmserchfieldset {
+  margin-top: 100px;
+  border-radius: 15px;
+  margin-bottom: 100px;
+  padding-bottom: 30px;
+  background-color: #ffb700;
+  border: none !important;
+
+
+}
+
+.hmserchfieldset input {
+  margin-top: 20px;
+  box-sizing: border-box;
+  height: 40px;
+  border-radius: 10px;
+  border: 2px solid black;
+  width: 80%;
+}
+
+.hmserchfieldset select {
+  margin-top: 20px;
+  box-sizing: border-box;
+  height: 40px;
+  border-radius: 10px;
+  border: 2px solid black;
+  margin-left: 20px;
+  width: 80%;
+}
+
+.hmserchfieldset button {
+  margin-top: 19px;
+}
+
+.react-datepicker-popper {
+  z-index: 99999 !important;
+}
+
+.lgndhd {
+  background-color: blue;
+  padding: 10px;
+  text-align: center;
+  font-family: 'FontAwesome';
+  text-transform: uppercase;
+  font-weight: bolder;
+}
+
+.srchtable {
+  border: none;
+}
+
+.srchtable tr {
+  border: none;
+  text-align: center;
+}
+
+.srchtable th {
+  border: 1px solid black;
+  color: black;
+  text-align: center;
+  font-weight: bolder;
+  text-decoration: underline;
+  font-size: 17px;
+}
+
+.srchtable td {
+
+  border: 1px solid black;
+  color: #fff;
+  text-align: center;
+  font-weight: bolder;
+}
+
+.srchtr {
+  border: none !important;
+}
+
+.srchbt {
+  border-radius: 20px;
+}
+
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
+
+  /* Force table to not be like tables anymore */
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    border: 1px solid #ccc;
+  }
+
+  td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+
+  .hmserchfieldset input {
+    margin-top: 20px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid black;
+    width: 60%;
+    text-align: center;
+  }
+
+  .hmserchfieldset select {
+
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid black;
+    width: 60%;
+    text-align: center;
+  }
+
+  .no-gutters .col-lg-4 {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+.bookingform select {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+
+.bookingform input {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
