@@ -9,7 +9,7 @@ import HeaderComponent from '../includes/HeaderComponent';
 //@ckeditor link : https://github.com/codeslayer1/react-ckeditor
 //@base64 converter https://github.com/BosNaufal/react-file-base64
 
-class AddCar extends React.Component {
+class UpdateCar extends React.Component {
     constructor(props) {
         super(props);
         //declare state variables
@@ -49,7 +49,8 @@ class AddCar extends React.Component {
             city_name: '',
             city_name_error: '',
             brand_name: '',
-            brand_name_error: ''
+            brand_name_error: '',
+            id: props.match.params.id
         }
 
         this.changeStatus = this.changeStatus.bind(this);
@@ -102,6 +103,7 @@ class AddCar extends React.Component {
             })
         }
         if (event.target.name === "is_ac") {
+            // alert(event.target.value)
             this.setState({
                 is_ac: event.target.value
             })
@@ -194,16 +196,16 @@ class AddCar extends React.Component {
                 brand_name_error: ""
             })
         }
-        if (this.state.car_image == "") {
-            errorCount++;
-            this.setState({
-                car_image_error: "Please provide car image"
-            })
-        } else {
-            this.setState({
-                car_image_error: ""
-            })
-        }
+        // if (this.state.car_image == "") {
+        //     errorCount++;
+        //     this.setState({
+        //         car_image_error: "Please provide car image"
+        //     })
+        // } else {
+        //     this.setState({
+        //         car_image_error: ""
+        //     })
+        // }
         if (this.state.car_name == "") {
             errorCount++;
             this.setState({
@@ -234,7 +236,8 @@ class AddCar extends React.Component {
                 no_of_seats_error: ""
             })
         }
-        if (this.state.is_ac == "") {
+        //alert(this.state.is_ac)
+        if (this.state.is_ac != 0 && this.state.is_ac != 1) {
             errorCount++;
             this.setState({
                 is_ac_error: "Please provide ac or non ac"
@@ -244,7 +247,7 @@ class AddCar extends React.Component {
                 is_ac_error: ""
             })
         }
-        if (this.state.is_manual == "") {
+        if (this.state.is_manual != 0 && this.state.is_manual != 1) {
             errorCount++;
             this.setState({
                 is_manual_error: "Please provide manual or automatic"
@@ -336,8 +339,8 @@ class AddCar extends React.Component {
         }
         if (errorCount == 0) {
 
-            //call insert api
-            axios.post("http://localhost:3000/addcar", {
+            //call car update api
+            axios.put("http://localhost:3000/updatecar", {
                 car_name: this.state.car_name,
                 car_no: this.state.car_no,
                 no_of_seats: this.state.no_of_seats,
@@ -354,14 +357,15 @@ class AddCar extends React.Component {
                 fuel_tank_capacity: this.state.fuel_tank_capacity,
                 city_name: this.state.city_name,
                 brand_name: this.state.brand_name,
+                carIdPk: this.state.id
             }, this.config).then((res) => {
                 console.log(res);
                 //document.getElementById("register_form").reset();
                 this.setState({
-                    success_msg: "Car added successfully."
+                    success_msg: "Car updated successfully."
                 })
                 //toaster for success
-                toastSuccess("Car added successfully")
+                toastSuccess("Car updated successfully")
                 //this.resetInputFields()
                 setTimeout(() => this.setState({ redirect: true }), 2000)
 
@@ -390,6 +394,33 @@ class AddCar extends React.Component {
     componentWillMount() {
         console.log('Component Will MOUNT!')
         //call api
+        //############call api car details for update car#############
+        axios.post("http://localhost:3000/listcar?carId=" + this.state.id).then((res) => {
+            console.log(res.data.data.car_details);
+            this.setState({
+                car_name: res.data.data.car_details[0].car_name,
+                car_no: res.data.data.car_details[0].car_no,
+                no_of_seats: res.data.data.car_details[0].no_of_seats,
+                is_ac: res.data.data.car_details[0].is_ac,
+                mileage: res.data.data.car_details[0].mileage,
+                is_manual: res.data.data.car_details[0].is_manual,
+                other_details: res.data.data.car_details[0].other_details,
+                important_details: res.data.data.car_details[0].important_details,
+                no_of_large_bags: res.data.data.car_details[0].no_of_large_bags,
+                no_of_small_bags: res.data.data.car_details[0].no_of_small_bags,
+                price_per_hour: res.data.data.car_details[0].price_per_hour,
+                car_image: res.data.data.car_details[0].car_image,
+                fuel_type: res.data.data.car_details[0].fuel_type,
+                fuel_tank_capacity: res.data.data.car_details[0].fuel_tank_capacity,
+                city_name: res.data.data.car_details[0].city_name,
+                brand_name: res.data.data.car_details[0].brand_name
+            })
+
+        }).catch((err) => {
+            console.log(err)
+
+        })
+        //############################################
         axios.get("http://localhost:3000/listcity").then((res) => {
             console.log(res.data.data);
             this.setState({
@@ -422,21 +453,21 @@ class AddCar extends React.Component {
                     <section id="contact" class="contact">
                         <div class="container" id="hdln" >
                             <fieldset>
-                                <legend >ADD CAR </legend>
+                                <legend >UPDATE CAR </legend>
                                 <div class="row mt-5 justify-content-center">
                                     <div class="col-lg-10">
                                         <form id="register_form">
 
                                             <div class="row" id="rwfrst">
                                                 <div class="col-md-6 radio">
-                                                    <label> <input type="radio" name="is_ac" class="gender" value="1" onChange={this.changeStatus} /> AC </label>
-                                                    <label> <input type="radio" name="is_ac" class="gender" value="0" onChange={this.changeStatus} /> Non AC </label>
+                                                    <label> <input type="radio" name="is_ac" class="gender" value="1" onChange={this.changeStatus} checked={this.state.is_ac == 1} /> AC </label>
+                                                    <label> <input type="radio" name="is_ac" class="gender" value="0" onChange={this.changeStatus} checked={this.state.is_ac == 0} /> Non AC </label>
                                                     <p class="valdtncls">{this.state.is_ac_error}</p>
                                                 </div>
 
                                                 <div class="col-md-6 radio">
-                                                    <label> <input type="radio" name="is_manual" class="gender" value="1" onChange={this.changeStatus} /> Manual </label>
-                                                    <label> <input type="radio" name="is_manual" class="gender" value="0" onChange={this.changeStatus} /> Automatic</label>
+                                                    <label> <input type="radio" name="is_manual" class="gender" value="1" onChange={this.changeStatus} checked={this.state.is_manual == 1} /> Manual </label>
+                                                    <label> <input type="radio" name="is_manual" class="gender" value="0" onChange={this.changeStatus} checked={this.state.is_manual == 0} /> Automatic</label>
                                                     <p class="valdtncls">{this.state.is_manual_error}</p>
                                                 </div>
 
@@ -444,14 +475,15 @@ class AddCar extends React.Component {
                                             </div>
 
                                             <div class="row" >
+
                                                 <div class="col-md-6 form-group">
                                                     <label class="carlbl">Car Name: </label>
-                                                    <input type="text" name="car_name" class="form-control" id="car_name" placeholder="Car Name" onChange={this.changeStatus} />
+                                                    <input type="text" name="car_name" class="form-control" id="car_name" placeholder="Car Name" onChange={this.changeStatus} value={this.state.car_name} />
                                                     <p class="valdtncls">{this.state.car_name_error}</p>
                                                 </div>
                                                 <div class="col-md-6 form-group mt-3 mt-md-0">
                                                     <label class="carlbl">Car No: </label>
-                                                    <input type="text" class="form-control" name="car_no" id="car_no" placeholder="Car No" onChange={this.changeStatus} />
+                                                    <input type="text" class="form-control" name="car_no" id="car_no" placeholder="Car No" onChange={this.changeStatus} value={this.state.car_no} />
                                                     <p class="valdtncls">{this.state.car_no_error}</p>
                                                 </div>
                                             </div>
@@ -459,12 +491,12 @@ class AddCar extends React.Component {
                                             <div class="row" >
                                                 <div class="col-md-6 form-group">
                                                     <label class="carlbl">No Of Seats: </label>
-                                                    <input type="text" name="no_of_seats" class="form-control" id="no_of_seats" placeholder="No Of Seats" onChange={this.changeStatus} />
+                                                    <input type="text" name="no_of_seats" class="form-control" id="no_of_seats" placeholder="No Of Seats" onChange={this.changeStatus} value={this.state.no_of_seats} />
                                                     <p class="valdtncls">{this.state.no_of_seats_error}</p>
                                                 </div>
                                                 <div class="col-md-6 form-group mt-3 mt-md-0">
                                                     <label class="carlbl">Mileage: </label>
-                                                    <input type="text" class="form-control" name="mileage" id="mileage" placeholder="Mileage" onChange={this.changeStatus} />
+                                                    <input type="text" class="form-control" name="mileage" id="mileage" placeholder="Mileage" onChange={this.changeStatus} value={this.state.mileage} />
                                                     <p class="valdtncls">{this.state.mileage_error}</p>
                                                 </div>
                                             </div>
@@ -507,12 +539,12 @@ class AddCar extends React.Component {
                                             <div class="row" >
                                                 <div class="col-md-6 form-group">
                                                     <label class="carlbl">No Of Large Bags: </label>
-                                                    <input type="text" name="no_of_large_bags" class="form-control" id="no_of_large_bags" placeholder="No Of Large Bags" onChange={this.changeStatus} />
+                                                    <input type="text" name="no_of_large_bags" class="form-control" id="no_of_large_bags" placeholder="No Of Large Bags" onChange={this.changeStatus} value={this.state.no_of_large_bags} />
                                                     <p class="valdtncls">{this.state.no_of_large_bags_error}</p>
                                                 </div>
                                                 <div class="col-md-6 form-group mt-3 mt-md-0">
                                                     <label class="carlbl">No Of Small Bags: </label>
-                                                    <input type="text" class="form-control" name="no_of_small_bags" id="no_of_small_bags" placeholder="No Of Small Bags" onChange={this.changeStatus} />
+                                                    <input type="text" class="form-control" name="no_of_small_bags" id="no_of_small_bags" placeholder="No Of Small Bags" onChange={this.changeStatus} value={this.state.no_of_small_bags} />
                                                     <p class="valdtncls">{this.state.no_of_small_bags_error}</p>
                                                 </div>
                                             </div>
@@ -520,7 +552,7 @@ class AddCar extends React.Component {
                                             <div class="row" >
                                                 <div class="col-md-6 form-group">
                                                     <label class="carlbl">Price Per Hour: </label>
-                                                    <input type="text" name="price_per_hour" class="form-control" id="price_per_hour" placeholder="Price Per Hour" onChange={this.changeStatus} />
+                                                    <input type="text" name="price_per_hour" class="form-control" id="price_per_hour" placeholder="Price Per Hour" onChange={this.changeStatus} value={this.state.price_per_hour} />
                                                     <p class="valdtncls">{this.state.price_per_hour_error}</p>
                                                 </div>
                                                 <div class="col-md-6 form-group mt-3 mt-md-0">
@@ -535,19 +567,19 @@ class AddCar extends React.Component {
                                             <div class="row" >
                                                 <div class="col-md-6 form-group">
                                                     <label class="carlbl">Fuel Type: </label>
-                                                    <input type="text" name="fuel_type" class="form-control" id="fuel_type" placeholder="Fuel Type" onChange={this.changeStatus} />
+                                                    <input type="text" name="fuel_type" class="form-control" id="fuel_type" placeholder="Fuel Type" onChange={this.changeStatus} value={this.state.fuel_type} />
                                                     <p class="valdtncls">{this.state.fuel_type_error}</p>
                                                 </div>
                                                 <div class="col-md-6 form-group mt-3 mt-md-0">
                                                     <label class="carlbl">Fuel Tank Capacity: </label>
-                                                    <input type="text" class="form-control" name="fuel_tank_capacity" id="fuel_tank_capacity" placeholder="Fuel Tank Capacity" onChange={this.changeStatus} />
+                                                    <input type="text" class="form-control" name="fuel_tank_capacity" id="fuel_tank_capacity" placeholder="Fuel Tank Capacity" onChange={this.changeStatus} value={this.state.fuel_tank_capacity} />
                                                     <p class="valdtncls">{this.state.fuel_tank_capacity_error}</p>
                                                 </div>
                                             </div>
                                             <div class="row" >
                                                 <div class="col-md-6 form-group">
                                                     <label class="carlbl">City Name: </label>
-                                                    <select name="city_name" class="form-control" id="city_name" onChange={this.changeStatus}>
+                                                    <select name="city_name" class="form-control" id="city_name" onChange={this.changeStatus} value={this.state.city_name}>
                                                         <option value="">--Select City---</option>
                                                         {
                                                             this.state.cities.map((elem, index) => {
@@ -562,14 +594,14 @@ class AddCar extends React.Component {
                                                 </div>
                                                 <div class="col-md-6 form-group mt-3 mt-md-0">
                                                     <label class="carlbl">Brand Name: </label>
-                                                    <input type="text" class="form-control" name="brand_name" id="brand_name" placeholder="Car Brand" onChange={this.changeStatus} />
+                                                    <input type="text" class="form-control" name="brand_name" id="brand_name" placeholder="Car Brand" onChange={this.changeStatus} value={this.state.brand_name} />
                                                     <p class="valdtncls">{this.state.brand_name_error}</p>
                                                 </div>
                                             </div>
 
 
 
-                                            <div class="text-center submtbtn" ><button class="btn btn-danger newbut" type="button" onClick={this.formSubmitNow}>Submit</button></div>
+                                            <div class="text-center submtbtn" ><button class="btn btn-danger newbut" type="button" onClick={this.formSubmitNow}>Update</button></div>
                                         </form>
                                     </div>
 
@@ -588,4 +620,4 @@ class AddCar extends React.Component {
         )
     }
 }
-export default AddCar
+export default UpdateCar

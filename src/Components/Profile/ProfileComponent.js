@@ -86,8 +86,8 @@ const ProfileComponent = () => {
         <>
             {ToastContainerInfo()}
             <div>
-                <section id="contact" class="contact"><h1 id="hdln">My Profile</h1></section>
-                <h3>{name}</h3>
+                <section id="contact" class="contact"><h4 id="hdln">My Profile</h4></section>
+                <h5>Hello {name} !</h5>
             </div>
             <HeaderComponent idParam={usrid} userTypeParam={usrtype} />
         </>

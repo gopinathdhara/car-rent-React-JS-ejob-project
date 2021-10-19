@@ -3,9 +3,12 @@ import axios from 'axios';
 import { toastSuccess, toastError, ToastContainerInfo } from '../Common/Utils'
 import { Redirect } from 'react-router-dom';
 import { withRouter } from "react-router-dom";
+import HeaderComponent from '../includes/HeaderComponent';
 
-const LoginComponent = () => {
+const LoginComponent = (props) => {
 
+    const [usrid, setUsridId] = useState(localStorage.getItem("usrid"))
+    const [usrtype, setUsrType] = useState(localStorage.getItem("usrtype"))
     const [email, setEmail] = useState("")
     const [emailError, setEmailError] = useState("")
     const [password, setPassword] = useState("")
@@ -16,6 +19,7 @@ const LoginComponent = () => {
 
     //update state
     const stateUpdate = (e) => {
+        console.log(props);
         if (e.target.name == "email") {
             setEmail(e.target.value)
         }
@@ -85,7 +89,19 @@ const LoginComponent = () => {
     })
 
     if (redirect) {
-        return <Redirect to="/profile" />
+        console.log('props');
+        console.log(props);
+        if (props.location.search_data != undefined) {
+
+            return <Redirect to={{
+                pathname: '/car-details/' + props.location.search_data.id,
+                search_data: props.location.search_data
+            }}
+            />
+        } else {
+            return <Redirect to="/profile" />
+        }
+
     }
     return (
 
@@ -122,6 +138,7 @@ const LoginComponent = () => {
 
                 </section>
             </div>
+            <HeaderComponent idParam={usrid} userTypeParam={usrtype} />
 
         </>
     )

@@ -3,13 +3,15 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { withRouter } from "react-router-dom";
 import { toastSuccess, toastError, ToastContainerInfo } from '../Common/Utils'
-
+import HeaderComponent from '../includes/HeaderComponent';
 
 class Register extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            usrid: localStorage.getItem("usrid"),
+            usrtype: localStorage.getItem("usrtype"),
             gender: "",
             gender_error: "",
             name: "",
@@ -368,7 +370,7 @@ class Register extends React.Component {
                     </section>
                 </div>
 
-
+                <HeaderComponent idParam={this.state.usrid} userTypeParam={this.state.usrtype} />
 
                 {/* <ToasterNotify succMsg={this.state.success_msg} errMsg={this.state.error_msg} toastSucc={this.successToast} /> */}
 

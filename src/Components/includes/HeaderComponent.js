@@ -3,8 +3,10 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  NavLink
 } from "react-router-dom";
+import { Nav, Navbar } from 'react-bootstrap';
 
 class HeaderComponent extends React.Component {
 
@@ -21,24 +23,30 @@ class HeaderComponent extends React.Component {
     if (this.props.idParam == undefined) {
       route1 = (
         <>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
+          <NavLink to="/login" exact activeClassName='is-active'>Login</NavLink>
+          <NavLink to="/register" exact activeClassName='is-active'>Register</NavLink>
         </>
       )
     } else {
       if (this.props.userTypeParam == 2) {
         route2 = (
           <>
-            <Link to="/addcar">Add Car</Link>
-
+            <NavLink to="/addcar" exact activeClassName='is-active'>Add Car</NavLink>
+            <NavLink to="/my-booking" exact activeClassName='is-active'> Booking </NavLink>
+            <NavLink to="/user-list" exact activeClassName='is-active'> Users </NavLink>
           </>
 
+        )
+      } else {
+        route2 = (
+          <NavLink to="/my-booking" exact activeClassName='is-active'> My Booking </NavLink>
         )
       }
       route1 = (
         <>
-          <Link to="/profile">Profile</Link>
-          <Link to="/logout">Logout</Link>
+          <NavLink to="/profile" exact activeClassName='is-active'>Profile</NavLink>
+
+          <NavLink to="/logout" exact activeClassName='is-active'>Logout</NavLink>
         </>
 
       )
@@ -47,51 +55,34 @@ class HeaderComponent extends React.Component {
 
     return (
       <>
+
         <header id="header" class="fixed-top">
+
           <div class="container d-flex align-items-center">
 
             <h1 class="logo me-auto"><i class="fa fa-car" style={{ "font-size": "48px;", "color": "yellow" }}></i> &nbsp;&nbsp;<Link to="/"><span>Car Rent</span></Link></h1>
 
 
+            <Navbar collapseOnSelect expand="lg">
+              <Navbar.Toggle />
+              <Navbar.Collapse>
+                <Nav className="mr-auto d-block">
 
-            <nav id="navbar" class="navbar order-last order-lg-0">
-              <ul>
-                <Link to="/">Home</Link>
+                  <NavLink to="/" exact activeClassName='is-active'>Home</NavLink >
 
-                {/* <li class="dropdown"><a href="#"><span>About</span> <i class="bi bi-chevron-down"></i></a>
-                  <ul>
-                    <Link to="/about-us">About</Link>
-                    <li><a href="team.html">Team</a></li>
-                    <li><a href="testimonials.html">Testimonials</a></li>
-                    <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                      <ul>
-                        <li><a href="#">Deep Drop Down 1</a></li>
-                        <li><a href="#">Deep Drop Down 2</a></li>
-                        <li><a href="#">Deep Drop Down 3</a></li>
-                        <li><a href="#">Deep Drop Down 4</a></li>
-                        <li><a href="#">Deep Drop Down 5</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li> */}
+                  <NavLink exact to="/about-us" activeClassName='is-active'>About</NavLink>
 
-                {/* <li><a href="services.html">Services</a></li>
-                <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="pricing.html">Pricing</a></li>
-                <li><a href="blog.html">Blog</a></li> */}
-                <Link to="/about-us">About</Link>
-                <Link to="/contact-us">Contact Us</Link>
-                {/* <Link to="/register">Register</Link> */}
-                {/* <Link to="/login">Login</Link>
-                <Link to="/logout">Logout</Link> */}
-                <Link to="/listcar"> Car Price</Link>
-                {route2}
-                {route1}
-                {/* <Link to="/profile">Profile</Link> */}
+                  <NavLink exact to="/contact-us" activeClassName='is-active'>Contact Us</NavLink>
 
-              </ul>
-              <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav>
+                  <NavLink exact to="/listcar" activeClassName='is-active'> Car List </NavLink>
+
+                  {route2}
+                  {route1}
+
+                </Nav>
+              </Navbar.Collapse>
+            </Navbar>
+
 
             {/* <div class="header-social-links d-flex">
               <a href="#" class="twitter"><i class="bu bi-twitter"></i></a>

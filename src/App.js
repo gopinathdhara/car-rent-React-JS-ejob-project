@@ -7,7 +7,7 @@ import ContactUsComponent from './Components/ContactUs/ContactUsComponent';
 import HomeComponent from './Components/Home/HomeComponent';
 import HeadComponent from './Components/includes/HeadComponent';
 import RegisterComponent from './Components/Register/RegisterComponent';
-
+import React, { useState, useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,19 +20,25 @@ import ProfileComponent from './Components/Profile/ProfileComponent';
 import AddCar from './Components/Car/AddCar';
 import ListCar from './Components/Car/ListCar';
 import CarDetails from './Components/Car/CarDetails';
+import BookingList from './Components/Booking/BookingList';
+import UserList from './Components/Users/UserList';
+import UpdateCar from './Components/Car/UpdateCar';
 
 function App(props) {
 
+
   return (
     <>
+
       <html lang="en" >
+
         <HeadComponent />
         <body>
           <div className="App">
 
             <Router>
               <div>
-                <HeaderComponent />
+                {/* <HeaderComponent /> */}
                 <Switch>
                   <Route path="/about-us">
                     <AboutUsComponent />
@@ -43,9 +49,11 @@ function App(props) {
                   <Route path="/register">
                     <RegisterComponent />
                   </Route>
-                  <Route path="/login">
+                  {/* <Route path="/login">
                     <LoginComponent />
-                  </Route>
+                  </Route> */}
+                  <Route path="/login" render={(props) => <LoginComponent {...props} />}
+                  />
                   <Route path="/profile">
                     <ProfileComponent />
                   </Route>
@@ -59,8 +67,13 @@ function App(props) {
                     <ListCar />
                   </Route> */}
                   <Route path="/listcar" component={ListCar} />
+                  <Route path="/my-booking" component={BookingList} />
 
                   <Route path="/car-details/:id" component={CarDetails} />
+                  <Route path="/car-update/:id" component={UpdateCar} />
+                  <Route path="/user-list">
+                    <UserList />
+                  </Route>
                   <Route path="/">
                     <HomeComponent />
                   </Route>
@@ -73,7 +86,9 @@ function App(props) {
           </div>
 
         </body>
+
       </html>
+
     </>
   );
 }
