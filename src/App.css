@@ -339,6 +339,15 @@ body {
     display: block;
   }
 
+  .navbar-toggler-icon {
+    font-size: 15px;
+  }
+
+  .navbar a,
+  .navbar a:focus {
+    font-size: 9px !important;
+  }
+
   .navbar-toggler {
     margin-left: 215px;
   }
@@ -349,8 +358,8 @@ body {
 
   .mr-auto a {
     float: left;
-    width: 30%;
-    margin-left: 50px;
+    width: 20%;
+    margin-left: 20px;
   }
 
   .me-auto {
@@ -358,7 +367,7 @@ body {
   }
 
   .me-auto span {
-    font-size: 15px !important;
+    font-size: 9px !important;
     width: 100%;
 
   }
@@ -522,7 +531,7 @@ body {
 
 .mr-auto a {
   float: left;
-  font-size: 13px !important;
+  font-size: 13px;
 }
 
 .me-auto span {
@@ -531,7 +540,7 @@ body {
 
 .is-active {
   background-color: #f17241;
-  padding: 10px !important;
+  padding: 8px !important;
   margin-left: 10px;
 }
 

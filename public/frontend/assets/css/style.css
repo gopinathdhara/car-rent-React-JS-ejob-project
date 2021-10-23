@@ -2240,3 +2240,9 @@ section {
   color: #fff;
   text-decoration: none;
 }
+
+.is-active {
+  background-color: #f17241;
+  padding: 12px;
+  margin-left: 10px;
+}
