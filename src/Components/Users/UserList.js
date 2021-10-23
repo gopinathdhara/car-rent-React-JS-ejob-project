@@ -28,6 +28,7 @@ class UserList extends React.Component {
         setTimeout(() => this.setState({ isActive: false }), 1000)
         console.log('Component Did MOUNT!')
     }
+
     componentWillMount() {
 
         console.log('Component Will MOUNT!')

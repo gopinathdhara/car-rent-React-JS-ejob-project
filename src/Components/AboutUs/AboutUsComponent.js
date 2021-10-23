@@ -19,33 +19,31 @@ class AboutUsComponent extends React.Component {
         return (
             <>
                 <div>
-                    <h2 id="hdng">About Us</h2>
+
 
 
                     <section id="about-us" class="about-us">
                         <div class="container" >
-
+                            <h2 id="hdng">About Us</h2>
                             <div class="row content">
-                                <div class="col-lg-6">
-                                    <h2>Eum ipsam laborum deleniti velitena</h2>
-                                    <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assum perenda sruen jonee trave</h3>
-                                </div>
-                                <div class="col-lg-6 pt-4 pt-lg-0" >
-                                    <p>
-                                        Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                        culpa qui officia deserunt mollit anim id est laborum
+                                <div class="col-lg-12">
+
+                                    <h4 class="abthd">Welcome to Car Rent</h4>
+                                    <p class="abtpara">
+                                        That wonderful feeling you start the engine and your adventure begins…
+
+                                        At Car Rent everything we do is about giving you the freedom to discover more. We will move mountains to find you the right rental car, and bring you a smooth, hassle-free experience from start to finish.
+
+
                                     </p>
-                                    <ul>
-                                        <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequa</li>
-                                        <li><i class="ri-check-double-line"></i> Duis aute irure dolor in reprehenderit in voluptate velit</li>
-                                        <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in</li>
-                                    </ul>
-                                    <p class="fst-italic">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                        magna aliqua.
+                                    <p class="abtpara">
+                                        We are a broker, so we arrange the car rental on your behalf. We use our massive buying power to bring you great deals. But we’re way more than a price comparison site, because we stay with you every step of the way.
+                                    </p>
+                                    <p class="abtpara">
+                                        We use all our experience – and the experiences of millions of our customers – to bring you the car you need and the quality of service you want. Always at the best price. But don’t take our word for it.
                                     </p>
                                 </div>
+
                             </div>
 
                         </div>

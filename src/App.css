@@ -574,3 +574,18 @@ body {
 .hiddenbksts {
   pointer-events: none;
 }
+
+.abthd {
+  font-size: 22px;
+  margin-bottom: 10px;
+  font-family: 'FontAwesome';
+  font-weight: bold;
+  color: blue;
+}
+
+.abtpara {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-family: 'Open Sans';
+  color: black;
+}

@@ -235,6 +235,7 @@ class BookingList extends React.Component {
 
                                     })
                                 }
+                                <h4>{this.state.bookingInfo.length == 0 ? 'No Record Found' : ''}</h4>
 
                             </div>
                         </section>

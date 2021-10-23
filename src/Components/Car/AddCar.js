@@ -234,6 +234,7 @@ class AddCar extends React.Component {
                 no_of_seats_error: ""
             })
         }
+        // alert(this.state.is_manual)
         if (this.state.is_ac == "") {
             errorCount++;
             this.setState({

@@ -84,6 +84,12 @@ const CarDetails = (props) => {
         var endDate1 = new Date();
         var startTime1 = '';
         var endTime1 = '';
+        var userName1 = '';
+        var userEmail1 = '';
+        var userPhone1 = '';
+        var userAddress1 = '';
+        var pickupLocation1 = '';
+        var dropoffLocation1 = '';
         //props.location.search_data.id = props.match.params.id;
         if (props.location.search_data != undefined) {
             cityName1 = props.location.search_data.city;
@@ -91,11 +97,27 @@ const CarDetails = (props) => {
             endDate1 = props.location.search_data.enddate;
             startTime1 = props.location.search_data.starttime;
             endTime1 = props.location.search_data.endtime;
+
+            userName1 = props.location.search_data.userName;
+            userEmail1 = props.location.search_data.userEmail;
+            userPhone1 = props.location.search_data.userPhone;
+            userAddress1 = props.location.search_data.userAddress;
+            pickupLocation1 = props.location.search_data.pickupLocation;
+            dropoffLocation1 = props.location.search_data.dropoffLocation;
+
             setCityName(cityName1)
             setStartDate(startDate1)
             setEndDate(endDate1)
             setStartTime(startTime1)
             setEndTime(endTime1)
+
+            setUserName(userName1)
+            setUserEmail(userEmail1)
+            setUserPhone(userPhone1)
+            setUserAddress(userAddress1)
+            setPickupLocation(pickupLocation1)
+            setDropoffLocation(dropoffLocation1)
+
 
         } else {
 
@@ -303,6 +325,12 @@ const CarDetails = (props) => {
         var searchData = {};
         if (props.location.search_data != undefined) {
             searchData = props.location.search_data;
+            searchData.userName = userName
+            searchData.userEmail = userEmail
+            searchData.userPhone = userPhone
+            searchData.userAddress = userAddress
+            searchData.pickupLocation = pickupLocation
+            searchData.dropoffLocation = dropoffLocation
             searchData.id = props.match.params.id;
         }
         return <Redirect to={{
@@ -455,21 +483,21 @@ const CarDetails = (props) => {
                                                             <div class="col-lg-10">
                                                                 <div class="row">
                                                                     <div class="col-md-6 form-group">
-                                                                        <input type="text" class="form-control" name="userName" id="userName" onChange={changeStatus} placeholder="Name" />
+                                                                        <input type="text" class="form-control" name="userName" id="userName" onChange={changeStatus} placeholder="Name" value={userName} />
                                                                         <p class="valdtncls">{userNameError}</p>
                                                                     </div>
                                                                     <div class="col-md-6 form-group">
-                                                                        <input class="form-control" type="text" name="userEmail" id="userEmail" onChange={changeStatus} placeholder="Email" />
+                                                                        <input class="form-control" type="text" name="userEmail" id="userEmail" onChange={changeStatus} placeholder="Email" value={userEmail} />
                                                                         <p class="valdtncls">{userEmailError}</p>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-md-6 form-group">
-                                                                        <input type="text" class="form-control" name="userPhone" id="userPhone" onChange={changeStatus} placeholder="Phone No" />
+                                                                        <input type="text" class="form-control" name="userPhone" id="userPhone" onChange={changeStatus} placeholder="Phone No" value={userPhone} />
                                                                         <p class="valdtncls">{userPhoneError}</p>
                                                                     </div>
                                                                     <div class="col-md-6 form-group">
-                                                                        <textarea class="form-control" type="text" name="userAddress" id="userAddress" onChange={changeStatus} placeholder="Address" rows="4"></textarea>
+                                                                        <textarea class="form-control" type="text" name="userAddress" id="userAddress" onChange={changeStatus} placeholder="Address" rows="4" value={userAddress}></textarea>
                                                                         <p class="valdtncls">{userAddressError}</p>
                                                                     </div>
                                                                 </div>
@@ -507,13 +535,13 @@ const CarDetails = (props) => {
 
                                                                 <div class="row">
                                                                     <div class="col-md-6 form-group">
-                                                                        <textarea rows="4" cols="47" placeholder="Pickup Location" class="form-control" name="pickupLocation" onChange={changeStatus}>
+                                                                        <textarea rows="4" cols="47" placeholder="Pickup Location" class="form-control" name="pickupLocation" onChange={changeStatus} value={pickupLocation}>
 
                                                                         </textarea>
                                                                         <p class="valdtncls">{pickupLocationError}</p>
                                                                     </div>
                                                                     <div class="col-md-6 form-group mt-3 mt-md-0">
-                                                                        <textarea rows="4" cols="47" placeholder="Drop Car Off  Location" class="form-control" name="dropoffLocation" onChange={changeStatus}>
+                                                                        <textarea rows="4" cols="47" placeholder="Drop Car Off  Location" class="form-control" name="dropoffLocation" onChange={changeStatus} value={dropoffLocation}>
 
                                                                         </textarea>
                                                                         <p class="valdtncls">{dropoffLocationError}</p>

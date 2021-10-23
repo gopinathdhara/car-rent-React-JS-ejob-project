@@ -228,6 +228,7 @@ class Register extends React.Component {
 
             //call insert api
             axios.post("http://localhost:3000/registration", {
+                gender: this.state.gender,
                 name: this.state.name,
                 email: this.state.email,
                 phone: this.state.phone,

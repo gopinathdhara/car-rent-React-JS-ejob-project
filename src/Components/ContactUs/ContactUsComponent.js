@@ -24,19 +24,19 @@ const ContactUsComponent = () => {
                                         <div class="col-lg-4 info">
                                             <i class="bi bi-geo-alt"></i>
                                             <h4>Location:</h4>
-                                            <p>A108 Adam Street<br />New York, NY 535022 </p>
+                                            <p>Howrah Post B.garden </p>
                                         </div>
 
                                         <div class="col-lg-4 info mt-4 mt-lg-0">
                                             <i class="bi bi-envelope"></i>
                                             <h4>Email:</h4>
-                                            <p>info@example.com<br />contact@example.com </p>
+                                            <p>gopi1.dhara@gmail.com </p>
                                         </div>
 
                                         <div class="col-lg-4 info mt-4 mt-lg-0">
                                             <i class="bi bi-phone"></i>
                                             <h4>Call:</h4>
-                                            <p>+1 5589 55488 51<br />+1 5589 22475 14</p>
+                                            <p>9804669402</p>
                                         </div>
                                     </div>
                                 </div>
@@ -44,9 +44,15 @@ const ContactUsComponent = () => {
                             </div>
 
                         </div>
-
-
                         <div class="row mt-5 justify-content-center">
+                            <div class="col-lg-10">
+
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8763.696287745239!2d88.29220176404961!3d22.553642102768105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0279b42bb7626f%3A0xed790f0df717a7af!2sBotanical%20Garden!5e0!3m2!1sen!2sin!4v1634934603627!5m2!1sen!2sin" width="600" height="450" style={{ 'border': '0' }} allowfullscreen="" loading="lazy"></iframe>
+                            </div>
+
+                        </div>
+
+                        {/* <div class="row mt-5 justify-content-center">
                             <div class="col-lg-10">
                                 <form action="forms/contact.php" method="post" role="form" class="php-email-form">
                                     <div class="row">
@@ -72,7 +78,7 @@ const ContactUsComponent = () => {
                                 </form>
                             </div>
 
-                        </div>
+                        </div> */}
 
                     </div>
                 </section>
