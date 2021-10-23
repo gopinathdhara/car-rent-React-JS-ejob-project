@@ -8,6 +8,7 @@ import { Redirect } from 'react-router-dom';
 import { withRouter } from "react-router-dom";
 import { useAlert } from 'react-alert'
 import LoadingOverlay from 'react-loading-overlay'
+import { serverBaseUrl } from '../Common/Utils'
 
 const CarDetails = (props) => {
 
@@ -54,7 +55,7 @@ const CarDetails = (props) => {
         setTimeout(() => setIsActive(false), 1000)
 
         //call api for car details
-        axios.post("http://localhost:3000/listcar?carId=" + id).then((res) => {
+        axios.post(serverBaseUrl + "listcar?carId=" + id).then((res) => {
             console.log(res.data.data.car_details);
             setCarsInfo(res.data.data.car_details)
             setCityName(res.data.data.car_details[0].city_name)
@@ -66,7 +67,7 @@ const CarDetails = (props) => {
 
         })
         //call api get list of cities
-        axios.get("http://localhost:3000/listcity").then((res) => {
+        axios.get(serverBaseUrl + "listcity").then((res) => {
             console.log(res.data.data);
             setCities(res.data.data)
 
@@ -265,7 +266,7 @@ const CarDetails = (props) => {
                 var hourDifference = difference / 1000 / 3600;
                 var total_price = parseFloat(hourDifference) * parseFloat(carPrice);
 
-                axios.post("http://localhost:3000/carbook", {
+                axios.post(serverBaseUrl + "carbook", {
                     car_id: id,
                     user_name: userName,
                     user_email: userEmail,
@@ -332,6 +333,8 @@ const CarDetails = (props) => {
             searchData.pickupLocation = pickupLocation
             searchData.dropoffLocation = dropoffLocation
             searchData.id = props.match.params.id;
+        } else {
+            searchData.id = props.match.params.id;
         }
         return <Redirect to={{
             pathname: '/login',
@@ -356,7 +359,7 @@ const CarDetails = (props) => {
                             <h3 class="hdlg" id="hdng">Car Details </h3>
                             {
                                 carsInfo.map((elem, index) => {
-                                    var imageurl = 'http://localhost:3000/cars/1/' + elem.car_image;
+                                    var imageurl = serverBaseUrl + 'cars/1/' + elem.car_image;
                                     return <div class="row">
 
                                         <div class="col-lg-12 entries">

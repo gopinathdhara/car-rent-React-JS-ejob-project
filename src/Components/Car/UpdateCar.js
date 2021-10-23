@@ -6,8 +6,8 @@ import { toastSuccess, toastError, ToastContainerInfo } from '../Common/Utils'
 import FileBase64 from 'react-file-base64';
 import CKEditor from "react-ckeditor-component";
 import HeaderComponent from '../includes/HeaderComponent';
-//@ckeditor link : https://github.com/codeslayer1/react-ckeditor
-//@base64 converter https://github.com/BosNaufal/react-file-base64
+import { serverBaseUrl } from '../Common/Utils'
+
 
 class UpdateCar extends React.Component {
     constructor(props) {
@@ -340,7 +340,7 @@ class UpdateCar extends React.Component {
         if (errorCount == 0) {
 
             //call car update api
-            axios.put("http://localhost:3000/updatecar", {
+            axios.put(serverBaseUrl + "updatecar", {
                 car_name: this.state.car_name,
                 car_no: this.state.car_no,
                 no_of_seats: this.state.no_of_seats,
@@ -395,7 +395,7 @@ class UpdateCar extends React.Component {
         console.log('Component Will MOUNT!')
         //call api
         //############call api car details for update car#############
-        axios.post("http://localhost:3000/listcar?carId=" + this.state.id).then((res) => {
+        axios.post(serverBaseUrl + "listcar?carId=" + this.state.id).then((res) => {
             console.log(res.data.data.car_details);
             this.setState({
                 car_name: res.data.data.car_details[0].car_name,
@@ -421,7 +421,7 @@ class UpdateCar extends React.Component {
 
         })
         //############################################
-        axios.get("http://localhost:3000/listcity").then((res) => {
+        axios.get(serverBaseUrl + "listcity").then((res) => {
             console.log(res.data.data);
             this.setState({
                 cities: res.data.data

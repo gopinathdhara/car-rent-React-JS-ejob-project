@@ -4,6 +4,8 @@ import { Redirect } from 'react-router-dom';
 import { withRouter } from "react-router-dom";
 import HeaderComponent from '../includes/HeaderComponent';
 import LoadingOverlay from 'react-loading-overlay'
+import { serverBaseUrl } from '../Common/Utils'
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -34,7 +36,7 @@ class UserList extends React.Component {
         console.log('Component Will MOUNT!')
 
         //call api
-        axios.get("http://localhost:3000/listuser").then((res) => {
+        axios.get(serverBaseUrl + "listuser").then((res) => {
             console.log(res.data.data);
             this.setState({
                 usersInfo: res.data.data

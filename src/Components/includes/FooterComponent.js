@@ -77,7 +77,7 @@ const FooterComponent = () => {
                             </div>
                             <div class="credits">
 
-                                Developed by <a href="https://bootstrapmade.com/">Developer Gopinath Dhara</a>
+                                Developed by Developer Gopinath Dhara
                             </div>
                         </div>
                         {/* <div class="social-links text-center text-md-right pt-3 pt-md-0">

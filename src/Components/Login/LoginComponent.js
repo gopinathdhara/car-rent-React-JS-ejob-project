@@ -4,6 +4,7 @@ import { toastSuccess, toastError, ToastContainerInfo } from '../Common/Utils'
 import { Redirect } from 'react-router-dom';
 import { withRouter } from "react-router-dom";
 import HeaderComponent from '../includes/HeaderComponent';
+import { serverBaseUrl } from '../Common/Utils'
 
 const LoginComponent = (props) => {
 
@@ -54,7 +55,7 @@ const LoginComponent = (props) => {
         }
         if (errorCount == 0) {
             //call api
-            axios.post("http://localhost:3000/login", {
+            axios.post(serverBaseUrl + "login", {
                 email: email,
                 password: password
             }).then((res) => {

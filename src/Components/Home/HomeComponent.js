@@ -8,6 +8,7 @@ import axios from 'axios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import LoadingOverlay from 'react-loading-overlay'
+import { serverBaseUrl } from '../Common/Utils'
 import {
     BrowserRouter as Router,
     Switch,
@@ -46,7 +47,7 @@ class HomeComponent extends React.Component {
 
         console.log('Component Will MOUNT!')
         //call api get list of cars
-        axios.post("http://localhost:3000/listcar?page=home").then((res) => {
+        axios.post(serverBaseUrl + "listcar?page=home").then((res) => {
             console.log(res.data.data.car_details);
             this.setState({
                 carsInfo: res.data.data.car_details
@@ -57,7 +58,7 @@ class HomeComponent extends React.Component {
 
         })
         //call api get list of cities
-        axios.get("http://localhost:3000/listcity").then((res) => {
+        axios.get(serverBaseUrl + "listcity").then((res) => {
             console.log(res.data.data);
             this.setState({
                 cities: res.data.data
@@ -217,7 +218,7 @@ class HomeComponent extends React.Component {
                                     <div class="row">
                                         {
                                             this.state.carsInfo.map((elem, index) => {
-                                                var imageurl = 'http://localhost:3000/cars/1/' + elem.car_image
+                                                var imageurl = serverBaseUrl + 'cars/1/' + elem.car_image
                                                 return <div class="col-lg-4 col-md-6 d-flex align-items-stretch homecar" >
                                                     <div class="icon-box iconbox-blue">
                                                         <div class="entry-img">

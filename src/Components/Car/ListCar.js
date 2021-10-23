@@ -6,6 +6,7 @@ import HeaderComponent from '../includes/HeaderComponent';
 import LoadingOverlay from 'react-loading-overlay'
 import { confirm } from "react-confirm-box";
 import { toastSuccess, toastError, ToastContainerInfo } from '../Common/Utils'
+import { serverBaseUrl } from '../Common/Utils'
 import {
     BrowserRouter as Router,
     Switch,
@@ -42,7 +43,7 @@ class ListCar extends React.Component {
         }
 
         //call api
-        axios.post("http://localhost:3000/listcar", {
+        axios.post(serverBaseUrl + "listcar", {
             search_data: this.props.location.search_data
         }
         ).then((res) => {
@@ -71,7 +72,7 @@ class ListCar extends React.Component {
         const result = await confirm("Are you sure to delete this car?");
         if (result) {
             console.log("You click yes!");
-            axios.post("http://localhost:3000/deletecar", {
+            axios.post(serverBaseUrl + "deletecar", {
                 carId: carId
             }, this.config).then((res) => {
                 console.log(res);
@@ -81,7 +82,7 @@ class ListCar extends React.Component {
                 //toaster for success
                 toastSuccess("Car deleted successfully")
                 //call api
-                axios.post("http://localhost:3000/listcar", {
+                axios.post(serverBaseUrl + "listcar", {
                     search_data: this.props.location.search_data
                 }
                 ).then((res) => {
@@ -138,7 +139,7 @@ class ListCar extends React.Component {
                                 {
                                     (this.state.carsInfo.length > 0) ?
                                         this.state.carsInfo.map((elem, index) => {
-                                            var imageurl = 'http://localhost:3000/cars/1/' + elem.car_image
+                                            var imageurl = serverBaseUrl + 'cars/1/' + elem.car_image
                                             return <div class="row">
 
                                                 <div class="col-lg-12 entries">

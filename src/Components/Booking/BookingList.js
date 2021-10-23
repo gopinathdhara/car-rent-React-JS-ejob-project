@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { withRouter } from "react-router-dom";
 import HeaderComponent from '../includes/HeaderComponent';
 import LoadingOverlay from 'react-loading-overlay'
+import { serverBaseUrl } from '../Common/Utils'
 import {
     BrowserRouter as Router,
     Switch,
@@ -38,7 +39,7 @@ class BookingList extends React.Component {
     }
     componentWillMount() {
 
-        axios.post("http://localhost:3000/carbooklist", {
+        axios.post(serverBaseUrl + "carbooklist", {
 
         }, this.config).then((res) => {
 
@@ -77,7 +78,7 @@ class BookingList extends React.Component {
     //############update booking status##############
     updateBookingStatus(status, carId) {
 
-        axios.post("http://localhost:3000/updateBookingStatus", {
+        axios.post(serverBaseUrl + "updateBookingStatus", {
             booking_status: status,
             carId: carId,
 
@@ -125,7 +126,7 @@ class BookingList extends React.Component {
                                 </h3 >
                                 {
                                     this.state.bookingInfo.map((elem, index) => {
-                                        var imageurl = 'http://localhost:3000/cars/1/' + elem.car_details[0].car_image
+                                        var imageurl = serverBaseUrl + 'cars/1/' + elem.car_details[0].car_image
                                         return <div class="row">
 
                                             <div class="col-lg-12 entries">

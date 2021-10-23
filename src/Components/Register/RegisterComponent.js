@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { withRouter } from "react-router-dom";
 import { toastSuccess, toastError, ToastContainerInfo } from '../Common/Utils'
 import HeaderComponent from '../includes/HeaderComponent';
+import { serverBaseUrl } from '../Common/Utils'
 
 class Register extends React.Component {
 
@@ -227,7 +228,7 @@ class Register extends React.Component {
         if (errorCount == 0) {
 
             //call insert api
-            axios.post("http://localhost:3000/registration", {
+            axios.post(serverBaseUrl + "registration", {
                 gender: this.state.gender,
                 name: this.state.name,
                 email: this.state.email,

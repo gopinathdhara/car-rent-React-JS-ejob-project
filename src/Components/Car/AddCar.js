@@ -6,6 +6,8 @@ import { toastSuccess, toastError, ToastContainerInfo } from '../Common/Utils'
 import FileBase64 from 'react-file-base64';
 import CKEditor from "react-ckeditor-component";
 import HeaderComponent from '../includes/HeaderComponent';
+import { serverBaseUrl } from '../Common/Utils'
+
 //@ckeditor link : https://github.com/codeslayer1/react-ckeditor
 //@base64 converter https://github.com/BosNaufal/react-file-base64
 
@@ -338,7 +340,7 @@ class AddCar extends React.Component {
         if (errorCount == 0) {
 
             //call insert api
-            axios.post("http://localhost:3000/addcar", {
+            axios.post(serverBaseUrl + "addcar", {
                 car_name: this.state.car_name,
                 car_no: this.state.car_no,
                 no_of_seats: this.state.no_of_seats,
@@ -391,7 +393,7 @@ class AddCar extends React.Component {
     componentWillMount() {
         console.log('Component Will MOUNT!')
         //call api
-        axios.get("http://localhost:3000/listcity").then((res) => {
+        axios.get(serverBaseUrl + "listcity").then((res) => {
             console.log(res.data.data);
             this.setState({
                 cities: res.data.data

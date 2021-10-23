@@ -4,6 +4,7 @@ import { toastSuccess, toastError, ToastContainerInfo } from '../Common/Utils'
 import { Redirect } from 'react-router-dom';
 import { withRouter } from "react-router-dom";
 import HeaderComponent from '../includes/HeaderComponent';
+import { serverBaseUrl } from '../Common/Utils'
 
 class ProfileComponent extends React.Component {
 
@@ -205,7 +206,7 @@ class ProfileComponent extends React.Component {
         if (errorCount == 0) {
 
             //call insert api
-            axios.post("http://localhost:3000/updateprofile", {
+            axios.post(serverBaseUrl + "updateprofile", {
                 gender: this.state.gender,
                 name: this.state.name,
                 email: this.state.email,
@@ -247,7 +248,7 @@ class ProfileComponent extends React.Component {
     componentWillMount() {
         console.log('Component Will MOUNT!')
         //call api
-        axios.post("http://localhost:3000/myprofile", {}, this.config).then((res) => {
+        axios.post(serverBaseUrl + "myprofile", {}, this.config).then((res) => {
             console.log(res.data.data);
 
             this.setState({
