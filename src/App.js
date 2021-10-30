@@ -12,7 +12,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  HashRouter
 } from "react-router-dom";
 import LoginComponent from './Components/Login/LoginComponent';
 import LogoutComponent from './Components/Logout/LogoutComponent';
@@ -36,11 +37,11 @@ function App(props) {
         <body>
           <div className="App">
 
-            <Router>
+            <HashRouter>
               <div>
                 {/* <HeaderComponent /> */}
                 <Switch>
-                  <Route path="/about-us">
+                  <Route path="/about-us" >
                     <AboutUsComponent />
                   </Route>
                   <Route path="/contact-us">
@@ -80,7 +81,7 @@ function App(props) {
                 </Switch>
               </div>
               <FooterComponent />
-            </Router>
+            </HashRouter>
 
 
           </div>
