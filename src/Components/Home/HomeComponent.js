@@ -9,6 +9,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import LoadingOverlay from 'react-loading-overlay'
 import { serverBaseUrl } from '../Common/Utils'
+import { Redirect } from 'react-router-dom';
+import { withAlert } from 'react-alert'
+import moment from 'moment'
 import {
     BrowserRouter as Router,
     Switch,
@@ -25,6 +28,7 @@ class HomeComponent extends React.Component {
             usrtype: localStorage.getItem("usrtype"),
             carsInfo: [],
             startDate: new Date(),
+            startDate_error: '',
             startDateFormatted: '',
             endDate: new Date(),
             endDateFormatted: '',
@@ -33,7 +37,8 @@ class HomeComponent extends React.Component {
             city_name_error: '',
             startTime: '',
             endTime: '',
-            isActive: true
+            isActive: true,
+            redirect: false
         }
         this.setStartDate = this.setStartDate.bind(this);
         this.setEndDate = this.setEndDate.bind(this);
@@ -131,7 +136,78 @@ class HomeComponent extends React.Component {
             ]}
         />
     );
+    //search car form validation
+    searchCar = () => {
+        //get current time
+        var now = new Date();
+        var currentHourMinute = now.getHours() + ":" + now.getMinutes();
+        var currentTimeData = this.toMinutes(currentHourMinute)
+
+        // alert(currentHourMinute)
+        // alert(currentTimeData)
+
+        var startTimeData = this.toMinutes(this.state.startTime);
+        //alert(startTimeData)
+
+        var inputStartDate = new Date(this.convert(this.state.startDate));
+        var inputEndDate = new Date(this.convert(this.state.endDate));
+
+        var errorCount = 0;
+        if (this.state.city_name == "") {
+            errorCount++;
+            this.props.alert.show("Please select city")
+        }
+        else if (this.state.startDate == null) {
+            errorCount++;
+            this.props.alert.show("Please enter start date")
+        }
+        else if (this.state.endDate == null) {
+            errorCount++;
+            this.props.alert.show("Please enter end date")
+        }
+        else if (this.state.startTime == "") {
+            errorCount++;
+            this.props.alert.show("Please select start time")
+        }
+        else if (this.state.endTime == "") {
+            errorCount++;
+            this.props.alert.show("Please select end time")
+        }
+        //check start date and end date
+        else if (inputStartDate > inputEndDate) {
+            errorCount++;
+            this.props.alert.show("startdate should not greater than enddate")
+        }
+        else if (inputStartDate.getTime() == inputEndDate.getTime() && parseInt(this.toMinutes(this.state.startTime)) >= parseInt(this.toMinutes(this.state.endTime))) {
+            errorCount++;
+            this.props.alert.show("startdatetime must be less than enddatetime")
+        }
+        else if (inputStartDate.toDateString() == new Date().toDateString() && startTimeData <= currentTimeData) {
+            errorCount++;
+            this.props.alert.show("Pick up time must be in the future")
+        }
+
+        if (errorCount == 0) {
+            setTimeout(() =>
+                this.setState({
+                    redirect: true
+                })
+                , 1000)
+        }
+    }
+    //convert time into minutes
+    toMinutes(time) {
+        var b = time.split(':');
+        return b[0] * 60 + +b[1];
+    }
     render() {
+        if (this.state.redirect) {
+
+            return <Redirect to={{
+                pathname: '/listcar/',
+                search_data: { city: this.state.city_name, startdate: this.state.startDate, starttime: this.state.startTime, enddate: this.state.endDate, endtime: this.state.endTime }
+            }} />;
+        }
         return (
             <>
 
@@ -180,27 +256,32 @@ class HomeComponent extends React.Component {
                                                             })
                                                         }
                                                     </select>
+
                                                 </td>
                                                 <td>
-                                                    <DatePicker selected={this.state.startDate} onChange={(date) => this.setStartDate(date)} name="startDate" />
+                                                    <DatePicker selected={this.state.startDate} onChange={(date) => this.setStartDate(date)} name="startDate" minDate={moment().toDate()} />
+
 
                                                 </td>
                                                 <td>
                                                     <select name="startTime" onChange={this.setStartTime}>
-                                                        <option value="00:00">00:00</option><option value="00:30">00:30</option><option value="01:00">01:00</option><option value="01:30">01:30</option><option value="02:00">02:00</option><option value="02:30">02:30</option><option value="03:00">03:00</option><option value="03:30">03:30</option><option value="04:00">04:00</option><option value="04:30">04:30</option><option value="05:00">05:00</option><option value="05:30">05:30</option><option value="06:00">06:00</option><option value="06:30">06:30</option><option value="07:00">07:00</option><option value="07:30">07:30</option><option value="08:00">08:00</option><option value="08:30">08:30</option><option value="09:00">09:00</option><option value="09:30">09:30</option><option value="10:00">10:00</option><option value="10:30">10:30</option><option value="11:00">11:00</option><option value="11:30">11:30</option><option value="12:00">12:00</option><option value="12:30">12:30</option><option value="13:00">13:00</option><option value="13:30">13:30</option><option value="14:00">14:00</option><option value="14:30">14:30</option><option value="15:00">15:00</option><option value="15:30">15:30</option><option value="16:00">16:00</option><option value="16:30">16:30</option><option value="17:00">17:00</option><option value="17:30">17:30</option><option value="18:00">18:00</option><option value="18:30">18:30</option><option value="19:00">19:00</option><option value="19:30">19:30</option><option value="20:00">20:00</option><option value="20:30">20:30</option><option value="21:00">21:00</option><option value="21:30">21:30</option><option value="22:00">22:00</option><option value="22:30">22:30</option><option value="23:00">23:00</option><option value="23:30">23:30</option></select>
+                                                        <option value="">Select</option>
+                                                        <option value="00:00">00:00</option>
+                                                        <option value="00:30">00:30</option><option value="01:00">01:00</option><option value="01:30">01:30</option><option value="02:00">02:00</option><option value="02:30">02:30</option><option value="03:00">03:00</option><option value="03:30">03:30</option><option value="04:00">04:00</option><option value="04:30">04:30</option><option value="05:00">05:00</option><option value="05:30">05:30</option><option value="06:00">06:00</option><option value="06:30">06:30</option><option value="07:00">07:00</option><option value="07:30">07:30</option><option value="08:00">08:00</option><option value="08:30">08:30</option><option value="09:00">09:00</option><option value="09:30">09:30</option><option value="10:00">10:00</option><option value="10:30">10:30</option><option value="11:00">11:00</option><option value="11:30">11:30</option><option value="12:00">12:00</option><option value="12:30">12:30</option><option value="13:00">13:00</option><option value="13:30">13:30</option><option value="14:00">14:00</option><option value="14:30">14:30</option><option value="15:00">15:00</option><option value="15:30">15:30</option><option value="16:00">16:00</option><option value="16:30">16:30</option><option value="17:00">17:00</option><option value="17:30">17:30</option><option value="18:00">18:00</option><option value="18:30">18:30</option><option value="19:00">19:00</option><option value="19:30">19:30</option><option value="20:00">20:00</option><option value="20:30">20:30</option><option value="21:00">21:00</option><option value="21:30">21:30</option><option value="22:00">22:00</option><option value="22:30">22:30</option><option value="23:00">23:00</option><option value="23:30">23:30</option></select>
 
                                                 </td>
                                                 <td>
-                                                    <DatePicker selected={this.state.endDate} onChange={(date) => this.setEndDate(date)} name="endDate" />
+                                                    <DatePicker selected={this.state.endDate} onChange={(date) => this.setEndDate(date)} name="endDate" minDate={moment().toDate()} />
                                                 </td>
                                                 <td>
                                                     <select name="endTime" onChange={this.setEndTime}>
+                                                        <option value="">Select</option>
                                                         <option value="00:00">00:00</option><option value="00:30">00:30</option><option value="01:00">01:00</option><option value="01:30">01:30</option><option value="02:00">02:00</option><option value="02:30">02:30</option><option value="03:00">03:00</option><option value="03:30">03:30</option><option value="04:00">04:00</option><option value="04:30">04:30</option><option value="05:00">05:00</option><option value="05:30">05:30</option><option value="06:00">06:00</option><option value="06:30">06:30</option><option value="07:00">07:00</option><option value="07:30">07:30</option><option value="08:00">08:00</option><option value="08:30">08:30</option><option value="09:00">09:00</option><option value="09:30">09:30</option><option value="10:00">10:00</option><option value="10:30">10:30</option><option value="11:00">11:00</option><option value="11:30">11:30</option><option value="12:00">12:00</option><option value="12:30">12:30</option><option value="13:00">13:00</option><option value="13:30">13:30</option><option value="14:00">14:00</option><option value="14:30">14:30</option><option value="15:00">15:00</option><option value="15:30">15:30</option><option value="16:00">16:00</option><option value="16:30">16:30</option><option value="17:00">17:00</option><option value="17:30">17:30</option><option value="18:00">18:00</option><option value="18:30">18:30</option><option value="19:00">19:00</option><option value="19:30">19:30</option><option value="20:00">20:00</option><option value="20:30">20:30</option><option value="21:00">21:00</option><option value="21:30">21:30</option><option value="22:00">22:00</option><option value="22:30">22:30</option><option value="23:00">23:00</option><option value="23:30">23:30</option></select>
                                                 </td>
                                                 <td class="srchtr">
 
-
-                                                    <Link class="btn btn-primary srchbt" style={{ 'margin-top': '18px' }} to={{ pathname: '/listcar/', search_data: { city: this.state.city_name, startdate: this.state.startDate, starttime: this.state.startTime, enddate: this.state.endDate, endtime: this.state.endTime } }} >Search</Link>
+                                                    <button style={{ 'margin-top': '18px' }} class="btn btn-primary srchbt btn-sm" onClick={this.searchCar}>SEARCH CAR</button >
+                                                    {/* <Link class="btn btn-primary srchbt" style={{ 'margin-top': '18px' }} to={{ pathname: '/listcar/', search_data: { city: this.state.city_name, startdate: this.state.startDate, starttime: this.state.startTime, enddate: this.state.endDate, endtime: this.state.endTime } }} >Search</Link> */}
 
 
                                                 </td>
@@ -330,4 +411,4 @@ class HomeComponent extends React.Component {
         )
     }
 }
-export default HomeComponent
+export default withAlert()(HomeComponent)

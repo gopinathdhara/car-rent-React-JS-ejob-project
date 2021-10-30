@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import HeaderComponent from '../includes/HeaderComponent';
 import LoadingOverlay from 'react-loading-overlay'
 import { serverBaseUrl } from '../Common/Utils'
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -22,7 +23,8 @@ class BookingList extends React.Component {
             usrtype: localStorage.getItem("usrtype"),
             searchData: '',
             isActive: true,
-            carId: 0
+            carId: 0,
+            bookStatusUpdate: 0
 
         }
         this.updateBookingStatus.bind(this)
@@ -76,33 +78,69 @@ class BookingList extends React.Component {
         }
     }
     //############update booking status##############
-    updateBookingStatus(status, carId) {
+    updateBookingStatus = (status, carId) => {
 
-        axios.post(serverBaseUrl + "updateBookingStatus", {
-            booking_status: status,
-            carId: carId,
+        if (status != "") {
+            var result = window.confirm("Are you sure to update booking status?");
+            if (result) {
+                axios.post(serverBaseUrl + "updateBookingStatus", {
+                    booking_status: status,
+                    carId: carId,
 
-        }, this.config).then((res) => {
-            console.log(res);
+                }, this.config).then((res) => {
+                    console.log(res);
 
-            //toaster for success
-            toastSuccess("Booking status updated successfully")
-            //this.resetInputFields()
+                    this.setState({
+                        bookStatusUpdate: 1
+                    })
 
+                    //call list api again to get updated data
+                    axios.post(serverBaseUrl + "carbooklist", {
 
-        }).catch((err) => {
-            if (typeof err.response != "undefined") {
-                console.log(err.response);
-                this.setState({
-                    error_msg: "Some error has been occurred. " + err.response.data.error
+                    }, this.config).then((res) => {
+
+                        console.log(res);
+                        this.setState({
+                            bookingInfo: res.data.data
+                        })
+
+                    }).catch((err) => {
+
+                        console.log('err.message');
+                        console.log(err.response);
+
+                        if (typeof err.response != "undefined") {
+
+                            var msg = err.response.data.error ? err.response.data.error : err.response.data.message;
+                            //toaster for error
+                            //toastError(msg);
+                        }
+
+                    })
+
+                    //toaster for success
+                    toastSuccess("Booking status updated successfully")
+                    //this.resetInputFields()
+
+                }).catch((err) => {
+                    if (typeof err.response != "undefined") {
+                        console.log(err.response);
+                        this.setState({
+                            error_msg: "Some error has been occurred. " + err.response.data.error
+
+                        })
+                        var msg = err.response.data.error;
+                        //toaster for error
+                        toastError(msg);
+                    }
 
                 })
-                var msg = err.response.data.error;
-                //toaster for error
-                toastError(msg);
+            } else {
+
             }
 
-        })
+        }
+
     }
     //##################################
     render() {
@@ -190,37 +228,66 @@ class BookingList extends React.Component {
 
                                                             </div>
                                                             <div class="entry-content">
-                                                                <label class="carlbl bokklbl">Booking Status: </label>
-                                                                <p>
-
-                                                                    <select onChange={(event) => this.updateBookingStatus(event.target.value, elem.id)}
-                                                                        className={"form-control" + " " + "bookstsdrp " + (localStorage.getItem("usrtype") == 2 ? 'hiddenbksts' : 'showbksts')}
-                                                                    >
+                                                                <label class="carlbl bokklbl2">Booking Status:&nbsp;
+                                                                    <span class="inpsts">
                                                                         {
+
+                                                                            (elem.booking_status == 0) ?
+                                                                                "InProgress" : ''
+                                                                        }
+                                                                    </span>
+                                                                    <span class="compsts">
+                                                                        {
+
+                                                                            (elem.booking_status == 1) ?
+                                                                                "Completed" : ''
+                                                                        }
+                                                                    </span>
+                                                                    <span class="cancsts">
+                                                                        {
+
+                                                                            (elem.booking_status == 2) ?
+                                                                                "Cancelled" : ''
+                                                                        }
+                                                                    </span>
+                                                                </label>
+
+
+                                                                <p>
+                                                                    {(elem.booking_status == 0 && localStorage.getItem("usrtype") != 2) ?
+                                                                        <>
+                                                                            <label class="carlbl bokklbl1">Update Status: </label>
+                                                                            <select onChange={(event) => this.updateBookingStatus(event.target.value, elem.id)}
+                                                                                className={"form-control" + " " + "bookstsdrp " + (localStorage.getItem("usrtype") == 2 ? 'hiddenbksts' : 'showbksts')}
+                                                                            >
+                                                                                <option value="">Select Status</option>
+                                                                                {/* {
 
                                                                             (elem.booking_status == 0) ?
                                                                                 <option value="0" selected="true">InProgress</option>
                                                                                 :
                                                                                 <option value="0" >InProgress</option>
-                                                                        }
-                                                                        {
-                                                                            (elem.booking_status == 1) ?
-                                                                                <option value="1" selected="true">Completed</option>
+                                                                        } */}
+                                                                                {
+                                                                                    (elem.booking_status == 1) ?
+                                                                                        <option value="1" selected="true">Completed</option>
 
-                                                                                :
-                                                                                <option value="1" >Completed</option>
-                                                                        }
-                                                                        {
-                                                                            (elem.booking_status == 2) ?
-                                                                                <option value="2" selected="true">Cancelled</option>
+                                                                                        :
+                                                                                        <option value="1" >Completed</option>
+                                                                                }
+                                                                                {
+                                                                                    (elem.booking_status == 2) ?
+                                                                                        <option value="2" selected="true">Cancelled</option>
 
-                                                                                :
-                                                                                <option value="2" >Cancelled</option>
+                                                                                        :
+                                                                                        <option value="2" >Cancelled</option>
 
 
 
-                                                                        }
-                                                                    </select>
+                                                                                }
+                                                                            </select>
+                                                                        </>
+                                                                        : ''}
 
                                                                 </p></div>
 

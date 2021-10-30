@@ -9,6 +9,7 @@ import { withRouter } from "react-router-dom";
 import { useAlert } from 'react-alert'
 import LoadingOverlay from 'react-loading-overlay'
 import { serverBaseUrl } from '../Common/Utils'
+import moment from 'moment'
 
 const CarDetails = (props) => {
 
@@ -25,8 +26,10 @@ const CarDetails = (props) => {
     const [endDate, setEndDate] = useState(new Date())
     const [endDateError, setEndDateError] = useState("")
     const [cities, setCities] = useState([])
-    const [startTime, setStartTime] = useState()
-    const [endTime, setEndTime] = useState()
+    const [startTime, setStartTime] = useState("")
+    const [endTime, setEndTime] = useState("")
+    const [startTimeError, setStartTimeError] = useState("")
+    const [endTimeError, setEndTimeError] = useState("")
     const [pickupLocation, setPickupLocation] = useState("")
     const [pickupLocationError, setPickupLocationError] = useState("")
     const [dropoffLocation, setDropoffLocation] = useState("")
@@ -54,6 +57,97 @@ const CarDetails = (props) => {
         console.log(props.location.search_data)
         setTimeout(() => setIsActive(false), 1000)
 
+        //update state variable
+        var cityName1 = '';
+        var startDate1 = new Date();
+        var endDate1 = new Date();
+        var startTime1 = '';
+        var endTime1 = '';
+        var userName1 = '';
+        var userEmail1 = '';
+        var userPhone1 = '';
+        var userAddress1 = '';
+        var pickupLocation1 = '';
+        var dropoffLocation1 = '';
+
+        //props.location.search_data.id = props.match.params.id;
+
+        if (props.location.search_data != undefined) {
+            cityName1 = props.location.search_data.city;
+            startDate1 = props.location.search_data.startdate;
+            endDate1 = props.location.search_data.enddate;
+            startTime1 = props.location.search_data.starttime;
+            endTime1 = props.location.search_data.endtime;
+
+            userName1 = props.location.search_data.userName;
+            userEmail1 = props.location.search_data.userEmail;
+            userPhone1 = props.location.search_data.userPhone;
+            userAddress1 = props.location.search_data.userAddress;
+            pickupLocation1 = props.location.search_data.pickupLocation;
+            dropoffLocation1 = props.location.search_data.dropoffLocation;
+            //console.log('pickupLocation1');
+            //console.log(pickupLocation1);
+            setCityName(cityName1)
+            setStartDate(startDate1)
+            setEndDate(endDate1)
+            setStartTime(startTime1)
+            setEndTime(endTime1)
+
+            setUserName(userName1)
+            setUserEmail(userEmail1)
+            setUserPhone(userPhone1)
+            setUserAddress(userAddress1)
+            setPickupLocation(pickupLocation1)
+            setDropoffLocation(dropoffLocation1)
+
+
+        } else {
+
+        }
+
+        //get profile details
+        if (localStorage.getItem("usrid") != "" && localStorage.getItem("usrid") != undefined) {
+
+            axios.post(serverBaseUrl + "myprofile", {}, config).then((res) => {
+                console.log(res.data.data);
+                console.log('userName')
+                console.log(userName)
+                if (props.location.search_data != undefined) {
+                    if (props.location.search_data.userName == "") {
+                        setUserName(res.data.data[0].name)
+                    }
+                    if (props.location.search_data.userEmail == "") {
+                        setUserEmail(res.data.data[0].email)
+                    }
+                    if (props.location.search_data.userPhone == "") {
+                        setUserPhone(res.data.data[0].phone)
+                    }
+                    if (props.location.search_data.userAddress == "") {
+                        setUserAddress(res.data.data[0].address)
+                    }
+                } else {
+                    setUserName(res.data.data[0].name)
+                    setUserEmail(res.data.data[0].email)
+                    setUserPhone(res.data.data[0].phone)
+                    setUserAddress(res.data.data[0].address)
+                }
+
+            }).catch((err) => {
+
+                console.log('err.message');
+                console.log(err.response);
+
+                if (typeof err.response != "undefined") {
+
+                    var msg = err.response.data.error ? err.response.data.error : err.response.data.message;
+
+                    //toaster for error
+                    toastError(msg);
+                }
+
+            })
+        }
+
         //call api for car details
         axios.post(serverBaseUrl + "listcar?carId=" + id).then((res) => {
             console.log(res.data.data.car_details);
@@ -79,50 +173,7 @@ const CarDetails = (props) => {
 
         })
 
-        //update state variable
-        var cityName1 = '';
-        var startDate1 = new Date();
-        var endDate1 = new Date();
-        var startTime1 = '';
-        var endTime1 = '';
-        var userName1 = '';
-        var userEmail1 = '';
-        var userPhone1 = '';
-        var userAddress1 = '';
-        var pickupLocation1 = '';
-        var dropoffLocation1 = '';
-        //props.location.search_data.id = props.match.params.id;
-        if (props.location.search_data != undefined) {
-            cityName1 = props.location.search_data.city;
-            startDate1 = props.location.search_data.startdate;
-            endDate1 = props.location.search_data.enddate;
-            startTime1 = props.location.search_data.starttime;
-            endTime1 = props.location.search_data.endtime;
 
-            userName1 = props.location.search_data.userName;
-            userEmail1 = props.location.search_data.userEmail;
-            userPhone1 = props.location.search_data.userPhone;
-            userAddress1 = props.location.search_data.userAddress;
-            pickupLocation1 = props.location.search_data.pickupLocation;
-            dropoffLocation1 = props.location.search_data.dropoffLocation;
-
-            setCityName(cityName1)
-            setStartDate(startDate1)
-            setEndDate(endDate1)
-            setStartTime(startTime1)
-            setEndTime(endTime1)
-
-            setUserName(userName1)
-            setUserEmail(userEmail1)
-            setUserPhone(userPhone1)
-            setUserAddress(userAddress1)
-            setPickupLocation(pickupLocation1)
-            setDropoffLocation(dropoffLocation1)
-
-
-        } else {
-
-        }
 
     }, []);
 
@@ -186,6 +237,19 @@ const CarDetails = (props) => {
             var errorCount = 0;
             var rgx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             var rgx1 = /^[0-9]{10}$/;
+            var now = new Date();
+            //console.log('pickupLocatio11n')
+            // console.log(pickupLocation)
+
+            //get current time
+            var now = new Date();
+            var currentHourMinute = now.getHours() + ":" + now.getMinutes();
+            var currentTimeData = toMinutes(currentHourMinute)
+            var startTimeData = toMinutes(startTime);
+            console.log(startTime)
+            var inputStartDate = new Date(convert(startDate));
+            var inputEndDate = new Date(convert(endDate));
+
             if (userName == "") {
                 errorCount++;
                 setUserNameError("Please provide name")
@@ -232,7 +296,21 @@ const CarDetails = (props) => {
                 setStartDateError("Please provide start date")
 
             } else {
-                setStartDateError("")
+                //check start date and end date
+                if (inputStartDate > inputEndDate) {
+                    errorCount++;
+                    setStartDateError("Startdate should not greater than enddate")
+
+                }
+                else {
+                    if (inputStartDate.getTime() == inputEndDate.getTime() && parseInt(toMinutes(startTime)) >= parseInt(toMinutes(endTime))) {
+                        errorCount++;
+                        setStartDateError("Startdatetime must be less than enddatetime")
+                    }
+                    else {
+                        setStartDateError("")
+                    }
+                }
             }
             if (endDate == null) {
                 errorCount++;
@@ -241,20 +319,42 @@ const CarDetails = (props) => {
             } else {
                 setEndDateError("")
             }
-            if (pickupLocation == "") {
+            if (startTime == "") {
+                errorCount++;
+                setStartTimeError("Please select start time")
+            }
+            else {
+                if (inputStartDate.toDateString() == new Date().toDateString() && startTimeData <= currentTimeData) {
+                    errorCount++;
+                    setStartTimeError("Pick up time must be in the future")
+                }
+                else {
+                    setStartTimeError("")
+                }
+            }
+            if (endTime == "") {
+                errorCount++;
+                setEndTimeError("Please select end time")
+            }
+            else {
+                setEndTimeError("")
+            }
+
+            if (pickupLocation == "" || pickupLocation == undefined) {
                 errorCount++;
                 setPickupLocationError("Please provide pick up location")
 
             } else {
                 setPickupLocationError("")
             }
-            if (dropoffLocation == "") {
+            if (dropoffLocation == "" || dropoffLocation == undefined) {
                 errorCount++;
                 setDropoffLocationError("Please provide drop off location")
 
             } else {
                 setDropoffLocationError("")
             }
+
             //call insert api
             if (errorCount == 0) {
                 //calculate total price
@@ -319,6 +419,7 @@ const CarDetails = (props) => {
 
 
     }
+
     if (redirect) {
         return <Redirect to="/my-booking" />
     }
@@ -326,12 +427,12 @@ const CarDetails = (props) => {
         var searchData = {};
         if (props.location.search_data != undefined) {
             searchData = props.location.search_data;
-            searchData.userName = userName
-            searchData.userEmail = userEmail
-            searchData.userPhone = userPhone
-            searchData.userAddress = userAddress
-            searchData.pickupLocation = pickupLocation
-            searchData.dropoffLocation = dropoffLocation
+            searchData.userName = userName ? userName : ''
+            searchData.userEmail = userEmail ? userEmail : ''
+            searchData.userPhone = userPhone ? userPhone : ''
+            searchData.userAddress = userAddress ? userAddress : ''
+            searchData.pickupLocation = pickupLocation ? pickupLocation : ''
+            searchData.dropoffLocation = dropoffLocation ? dropoffLocation : ''
             searchData.id = props.match.params.id;
         } else {
             searchData.id = props.match.params.id;
@@ -341,6 +442,11 @@ const CarDetails = (props) => {
             search_data: searchData
         }}
         />
+    }
+    //convert time into minutes
+    const toMinutes = (time) => {
+        var b = time.split(':');
+        return b[0] * 60 + +b[1];
     }
     return (
         <>
@@ -514,24 +620,28 @@ const CarDetails = (props) => {
                                                                 <div class="row">
                                                                     <div class="col-md-6 form-group">
                                                                         <DatePicker selected={startDate} onChange={setStartDate}
-                                                                            name="startDate" class="form-control" autoComplete="off" title="Start Date" />
+                                                                            name="startDate" class="form-control" autoComplete="off" title="Start Date" minDate={moment().toDate()} />
                                                                         <p class="valdtncls">{startDateError}</p>
                                                                     </div>
                                                                     <div class="col-md-6 form-group mt-3 mt-md-0">
                                                                         <select value={startTime} name="startTime" onChange={changeStatus}>
+                                                                            <option value="">Select</option>
                                                                             <option value="00:00">00:00</option><option value="00:30">00:30</option><option value="01:00">01:00</option><option value="01:30">01:30</option><option value="02:00">02:00</option><option value="02:30">02:30</option><option value="03:00">03:00</option><option value="03:30">03:30</option><option value="04:00">04:00</option><option value="04:30">04:30</option><option value="05:00">05:00</option><option value="05:30">05:30</option><option value="06:00">06:00</option><option value="06:30">06:30</option><option value="07:00">07:00</option><option value="07:30">07:30</option><option value="08:00">08:00</option><option value="08:30">08:30</option><option value="09:00">09:00</option><option value="09:30">09:30</option><option value="10:00">10:00</option><option value="10:30">10:30</option><option value="11:00">11:00</option><option value="11:30">11:30</option><option value="12:00">12:00</option><option value="12:30">12:30</option><option value="13:00">13:00</option><option value="13:30">13:30</option><option value="14:00">14:00</option><option value="14:30">14:30</option><option value="15:00">15:00</option><option value="15:30">15:30</option><option value="16:00">16:00</option><option value="16:30">16:30</option><option value="17:00">17:00</option><option value="17:30">17:30</option><option value="18:00">18:00</option><option value="18:30">18:30</option><option value="19:00">19:00</option><option value="19:30">19:30</option><option value="20:00">20:00</option><option value="20:30">20:30</option><option value="21:00">21:00</option><option value="21:30">21:30</option><option value="22:00">22:00</option><option value="22:30">22:30</option><option value="23:00">23:00</option><option value="23:30">23:30</option></select>
+                                                                        <p class="valdtncls">{startTimeError}</p>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="row">
                                                                     <div class="col-md-6 form-group">
                                                                         <DatePicker selected={endDate} onChange={setEndDate}
-                                                                            name="endDate" autoComplete="off" />
+                                                                            name="endDate" autoComplete="off" minDate={moment().toDate()} />
                                                                         <p class="valdtncls">{endDateError}</p>
                                                                     </div>
                                                                     <div class="col-md-6 form-group mt-3 mt-md-0">
                                                                         <select name="endTime" value={endTime} onChange={changeStatus}>
+                                                                            <option value="">Select</option>
                                                                             <option value="00:00">00:00</option><option value="00:30">00:30</option><option value="01:00">01:00</option><option value="01:30">01:30</option><option value="02:00">02:00</option><option value="02:30">02:30</option><option value="03:00">03:00</option><option value="03:30">03:30</option><option value="04:00">04:00</option><option value="04:30">04:30</option><option value="05:00">05:00</option><option value="05:30">05:30</option><option value="06:00">06:00</option><option value="06:30">06:30</option><option value="07:00">07:00</option><option value="07:30">07:30</option><option value="08:00">08:00</option><option value="08:30">08:30</option><option value="09:00">09:00</option><option value="09:30">09:30</option><option value="10:00">10:00</option><option value="10:30">10:30</option><option value="11:00">11:00</option><option value="11:30">11:30</option><option value="12:00">12:00</option><option value="12:30">12:30</option><option value="13:00">13:00</option><option value="13:30">13:30</option><option value="14:00">14:00</option><option value="14:30">14:30</option><option value="15:00">15:00</option><option value="15:30">15:30</option><option value="16:00">16:00</option><option value="16:30">16:30</option><option value="17:00">17:00</option><option value="17:30">17:30</option><option value="18:00">18:00</option><option value="18:30">18:30</option><option value="19:00">19:00</option><option value="19:30">19:30</option><option value="20:00">20:00</option><option value="20:30">20:30</option><option value="21:00">21:00</option><option value="21:30">21:30</option><option value="22:00">22:00</option><option value="22:30">22:30</option><option value="23:00">23:00</option><option value="23:30">23:30</option></select>
+                                                                        <p class="valdtncls">{endTimeError}</p>
                                                                     </div>
                                                                 </div>
 

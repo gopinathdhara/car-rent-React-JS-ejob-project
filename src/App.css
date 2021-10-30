@@ -323,7 +323,7 @@ body {
 }
 
 .srchbt {
-  border-radius: 20px;
+  border-radius: 10px !important;
 }
 
 @media only screen and (max-width: 760px),
@@ -580,6 +580,49 @@ body {
   margin-right: 10px;
 }
 
+.bokklbl1 {
+  text-align: left;
+  float: left;
+  margin-left: 50px;
+  margin-right: 10px;
+  color: red;
+  font-weight: bold;
+  font-family: 'Roboto';
+  font-size: 15px;
+
+}
+
+.bokklbl2 {
+  text-align: left;
+  float: left;
+  margin-left: 50px;
+  margin-right: 10px;
+  color: black;
+  font-weight: bold;
+
+}
+
+.inpsts {
+  font-size: 22px;
+  font-family: 'FontAwesome';
+  font-weight: bold;
+  color: #611abf;
+}
+
+.compsts {
+  color: green;
+  font-size: 22px;
+  font-family: 'FontAwesome';
+  font-weight: bold;
+}
+
+.cancsts {
+  color: red;
+  font-size: 22px;
+  font-family: 'FontAwesome';
+  font-weight: bold;
+}
+
 .hiddenbksts {
   pointer-events: none;
 }
@@ -597,4 +640,13 @@ body {
   margin-bottom: 10px;
   font-family: 'Open Sans';
   color: black;
+}
+
+.srcherrtxt {
+  color: #fff;
+  font-size: 14px;
+  font-weight: bolder;
+  text-transform: capitalize;
+  font-family: 'Open Sans';
+
 }
