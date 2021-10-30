@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery';
 import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.js';
-
+import { HashRouter } from 'react-router-dom'
 // optional cofiguration
 const options = {
   position: 'top center',
@@ -27,7 +27,10 @@ ReactDOM.render(
   // </React.StrictMode>,
   <>
     <AlertProvider template={AlertTemplate} {...options}>
-      <App />
+      <HashRouter>
+        <App />
+      </HashRouter>
+
     </AlertProvider>
   </>,
   document.getElementById('root')
